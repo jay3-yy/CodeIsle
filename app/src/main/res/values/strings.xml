@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">openisle</string>
+
+    <string name="privacy_policy_text">
+        欢迎使用我们的应用！\n\n
+        我们非常重视您的隐私。本隐私政策旨在说明我们如何收集、使用、共享和保护您的个人信息。\n\n
+        1. 信息的收集与使用\n
+        为了提供和改进我们的服务，我们可能会收集您在使用我们的应用时提供的信息，例如您的用户名、头像以及您发布的内容。\n\n
+        2. 信息共享\n
+        我们不会与任何第三方公司、组织和个人共享您的个人信息，但以下情况除外：\n
+        - 在获取明确同意的情况下共享；\n
+        - 根据法律法规的强制性要求。\n\n
+        3. 您的权利\n
+        您有权访问、更正、删除您的个人信息。您可以通过应用内的功能或联系我们来行使这些权利。\n\n
+        点击下方的“同意并继续”按钮，即表示您已阅读、理解并同意本隐私政策的所有内容。
+    </string>
+
+    <string name="author_avatar_description">作者头像</string>
+
+    <string name="join_date_format">加入时间: %1$s</string>
+    <string name="hot_replies">热门回复</string>
+    <string name="hot_topics">热门话题</string>
+    <string name="user_level_format">Lv.%1$d</string>
+    <string name="stats_posts_format">已发帖子\n%1$d</string>
+    <string name="stats_comments_format">已发回复\n%1$d</string>
+    <string name="stats_likes_format">收到赞\n%1$d</string>
+    <string name="nav_open">Open navigation drawer</string>
+    <string name="nav_close">Close navigation drawer</string>
+
+</resources>

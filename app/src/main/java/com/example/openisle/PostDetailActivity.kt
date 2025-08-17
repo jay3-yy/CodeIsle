@@ -74,9 +74,8 @@ class PostDetailActivity : AppCompatActivity() {
         // --- 新增代码在这里 ---
         // 8. 为顶部的作者头像设置点击事件
         avatarImageView.setOnClickListener {
-            // "author" 变量里存的就是作者名
-            val intent = Intent(this, UserProfileActivity::class.java).apply {
-                putExtra(UserProfileActivity.EXTRA_USER_IDENTIFIER, author)
+            val intent = Intent(this, ImageViewerActivity::class.java).apply {
+                putExtra(ImageViewerActivity.EXTRA_IMAGE_URL, avatarUrl)
             }
             startActivity(intent)
         }

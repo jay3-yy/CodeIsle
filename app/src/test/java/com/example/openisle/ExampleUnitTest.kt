@@ -1,16 +1,8 @@
-package com.example.openisle
+import org.junit.Test // ✅ 使用 JUnit 4 的 Test
+import org.junit.Assert.assertEquals // ✅ 使用 JUnit 4 的断言
 
-import org.junit.Test
-
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class ExampleUnitTest {
-    @Test
+    @Test // ✅ 现在能正确识别
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }

@@ -1,5 +1,5 @@
 package com.example.openisle.network
-
+import com.example.openisle.data.SearchResult
 import com.example.openisle.data.Category
 import com.example.openisle.data.Comment
 import com.example.openisle.data.Post
@@ -31,5 +31,8 @@ interface ApiService {
      */
     @GET("users/{identifier}/all")
     suspend fun getUserProfile(@Path("identifier") identifier: String): UserAggregate
+    // 在 ApiService.kt 文件里
 
+    @GET("search/global")
+    suspend fun searchGlobal(@Query("keyword") keyword: String): List<SearchResult>
 }

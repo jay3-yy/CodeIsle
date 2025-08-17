@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.openisle.ImageViewerActivity
 import com.example.openisle.R
 import com.example.openisle.UserProfileActivity
 import com.example.openisle.data.Post
@@ -18,6 +19,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(post: Post)
+        fun onAvatarClick(author: com.example.openisle.data.Author)
     }
     private var listener: OnItemClickListener? = null
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -37,7 +39,6 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = posts[position]
-
         holder.authorUsername.text = post.author.username
         holder.postTitle.text = post.title
         holder.authorAvatar.load(post.author.avatar) {
@@ -50,13 +51,11 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
             listener?.onItemClick(post)
         }
 
-        // --- 新增代码在这里 ---
-        // 这是头像的专属点击事件
+        // --- 关键改动在这里 ---
         holder.authorAvatar.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, UserProfileActivity::class.java).apply {
-                // 使用我们定义的“钥匙”，把作者的用户名作为“包裹”放进去
-                putExtra(UserProfileActivity.EXTRA_USER_IDENTIFIER, post.author.username)
+            val intent = Intent(context, ImageViewerActivity::class.java).apply {
+                putExtra(ImageViewerActivity.EXTRA_IMAGE_URL, post.author.avatar)
             }
             context.startActivity(intent)
         }

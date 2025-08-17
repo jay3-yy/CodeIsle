@@ -1,6 +1,6 @@
-# OpenIsle
+# CoodeIsle
 
-OpenIsle 是一个 Android 客户端应用程序，用于访问 [OpenIsle](https://www.open-isle.com/) 论坛。
+CodeIsle 是一个基于OpenIsle的Android 客户端应用程序，用于访问 [OpenIsle](https://www.open-isle.com/) 论坛。
 
 ## 功能
 

@@ -1,0 +1,28 @@
+# Gradle
+.gradle/
+build/
+!build.gradle.kts
+!settings.gradle.kts
+
+# Android Studio
+.idea/
+*.iml
+*.log
+*.swp
+*.swo
+
+# Local configuration files
+local.properties
+*.jks
+google-services.json
+
+# Build outputs
+/build/
+/out/
+
+# Gradle wrapper
+gradle/wrapper/dists/
+
+# Temporary files
+.DS_Store
+Thumbs.db

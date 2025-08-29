@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    [cite_start]<style name="Theme.Openisle" parent="Theme.App.Base"> [cite: 1]
+    [cite_start]<item name="colorPrimary">@color/primary_dark</item> [cite: 1]
+    [cite_start]<item name="colorOnPrimary">@color/on_primary_dark</item> [cite: 1]
+    [cite_start]<item name="colorPrimaryContainer">@color/primary_container_dark</item> [cite: 1]
+    [cite_start]<item name="colorOnPrimaryContainer">@color/on_primary_container_dark</item> [cite: 1]
+    [cite_start]<item name="colorSurface">@color/surface_dark</item> [cite: 1]
+    [cite_start]<item name="colorOnSurface">@color/on_surface_dark</item> [cite: 1]
+    [cite_start]<item name="colorOnSurfaceVariant">@color/on_surface_variant_dark</item> [cite: 1]
+    [cite_start]<item name="android:statusBarColor">@color/surface_dark</item> [cite: 1]
+    [cite_start]<item name="android:windowLightStatusBar">false</item> [cite: 1]
+</style>
+
+</resources>

@@ -7,32 +7,37 @@ import javax.inject.Inject
 class GetCategoriesUseCase @Inject constructor(
     private val repository: PostRepository
 ) {
-    // 这个 UseCase 负责从仓库获取分类列表，并手动添加一个 “All Posts” 选项
+
+    companion object {
+        // 定义一个通用的 "All Posts" 分类，避免重复创建
+        private val ALL_POSTS_CATEGORY = Category(
+            id = -1,
+            name = "All Posts",
+            description = "All available posts",
+            count = null,
+            icon = "",
+            smallIcon = ""
+        )
+    }
+
     suspend operator fun invoke(): List<Category> {
         return try {
             val remoteCategories = repository.getCategories()
-            // 在列表开头添加一个代表“全部”的分类对象
-            val allCategory = Category(
-                id = -1,
-                name = "All Posts",
-                description = "All available posts",
-                count = null, // count 是可空的，所以给 null
-                icon = "",     // 提供一个空的默认值
-                smallIcon = "" // 提供一个空的默认值
-            )
-            listOf(allCategory) + remoteCategories
+
+            // 避免重复添加 "All Posts"
+            val hasAllPosts = remoteCategories.any { it.name.equals("All Posts", ignoreCase = true) }
+
+            if (hasAllPosts) {
+                // 如果远程已有，则保持原顺序（或将其移到开头）
+                remoteCategories.map { if (it.name.equals("All Posts", ignoreCase = true)) ALL_POSTS_CATEGORY else it }
+                    .sortedBy { if (it.id == -1) 0 else 1 } // 把 "All Posts" 放在最前面
+            } else {
+                // 如果没有，则添加
+                listOf(ALL_POSTS_CATEGORY) + remoteCategories
+            }
         } catch (e: Exception) {
-            // 如果发生错误，也要返回一个结构正确的对象
-            listOf(
-                Category(
-                    id = -1,
-                    name = "All Posts",
-                    description = "All available posts",
-                    count = null,
-                    icon = "",
-                    smallIcon = ""
-                )
-            )
+            // 错误时返回一个合理的默认结构
+            listOf(ALL_POSTS_CATEGORY)
         }
     }
 }

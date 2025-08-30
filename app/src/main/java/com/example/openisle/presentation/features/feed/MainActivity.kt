@@ -39,6 +39,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
+import com.example.openisle.presentation.features.feed.MainViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnPostClickListener {
@@ -58,7 +59,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val postAdapter by lazy { PostAdapter(this) }
     private lateinit var categoryAdapter: CategoryAdapter
 
-    private var currentCategoryId: Int? = null
     private var isCardView = false
     private var isDrawerOpened = false
 
@@ -66,11 +66,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
         setContentView(R.layout.activity_main)
-
         bindViews()
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
@@ -79,25 +76,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         ViewCompat.setOnApplyWindowInsetsListener(drawerLayout) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            mainContent.updatePadding(
-                left = systemBars.left,
-                right = systemBars.right
-            )
-            navigationView.updatePadding(
-                top = systemBars.top,
-                bottom = systemBars.bottom
-            )
-
-            // ▼▼▼ 核心修改：将 padding 从 Toolbar 转移到其父布局 AppBarLayout ▼▼▼
-            appBarLayout.updatePadding(
-                top = systemBars.top
-            )
-            // ▲▲▲ 修改结束 ▲▲▲
-
-            postRecyclerView.updatePadding(
-                bottom = systemBars.bottom
-            )
+            mainContent.updatePadding(left = systemBars.left, right = systemBars.right)
+            navigationView.updatePadding(top = systemBars.top, bottom = systemBars.bottom)
+            appBarLayout.updatePadding(top = systemBars.top)
+            postRecyclerView.updatePadding(bottom = systemBars.bottom)
             insets
         }
 
@@ -107,8 +89,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         observeViewModel()
         handleOnBackPressed()
 
-        viewModel.refreshPosts()
-        viewModel.loadCategories()
+        // 修改：先加载分类，成功后再加载文章
+        loadInitialData()
     }
 
     private fun bindViews() {
@@ -128,30 +110,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setupToolbarAndDrawer() {
         setSupportActionBar(toolbar)
         navigationView.setNavigationItemSelectedListener(this)
-
         val toggle = object : ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         ) {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 super.onDrawerSlide(drawerView, slideOffset)
-                blurImageView.alpha = slideOffset
                 if (slideOffset > 0 && !isDrawerOpened) {
                     isDrawerOpened = true
-                    Blurry.with(this@MainActivity)
-                        .radius(25)
-                        .sampling(2)
-                        .capture(mainContent)
-                        .into(blurImageView)
+                    Blurry.with(this@MainActivity).radius(25).sampling(2).capture(mainContent).into(blurImageView)
                     blurImageView.visibility = View.VISIBLE
                 }
+                blurImageView.alpha = slideOffset
             }
-
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 isDrawerOpened = true
             }
-
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
                 blurImageView.visibility = View.GONE
@@ -163,61 +137,62 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun setupRecyclerViews() {
+        // 设置文章 RecyclerView
         postRecyclerView.layoutManager = LinearLayoutManager(this)
         postRecyclerView.adapter = postAdapter
-
         val spacingInPixels = dpToPx(12)
         gridSpacingDecoration = GridSpacingItemDecoration(2, spacingInPixels, true)
 
         postRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0) {
-                    val layoutManager = recyclerView.layoutManager
-                    val visibleItemCount: Int
-                    val totalItemCount: Int
-                    val firstVisibleItemPosition: Int
+                if (dy <= 0) return
 
-                    when(layoutManager) {
-                        is LinearLayoutManager -> {
-                            visibleItemCount = layoutManager.childCount
-                            totalItemCount = layoutManager.itemCount
-                            firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                            if (viewModel.isLoadingMore.value == false) {
-                                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount - 5 && firstVisibleItemPosition >= 0) {
-                                    viewModel.loadMorePosts(categoryId = currentCategoryId)
-                                }
-                            }
-                        }
-                        is StaggeredGridLayoutManager -> {
-                            visibleItemCount = layoutManager.childCount
-                            totalItemCount = layoutManager.itemCount
-                            val firstVisibleItems = layoutManager.findFirstVisibleItemPositions(null)
-                            firstVisibleItemPosition = firstVisibleItems.minOrNull() ?: 0
-                            if (viewModel.isLoadingMore.value == false) {
-                                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount - 5 && firstVisibleItemPosition >= 0) {
-                                    viewModel.loadMorePosts(categoryId = currentCategoryId)
-                                }
-                            }
-                        }
+                val layoutManager = recyclerView.layoutManager ?: return
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = when (layoutManager) {
+                    is LinearLayoutManager -> layoutManager.findFirstVisibleItemPosition()
+                    is StaggeredGridLayoutManager -> layoutManager.findFirstVisibleItemPositions(null).minOrNull() ?: 0
+                    else -> return
+                }
+
+                if (viewModel.isLoadingMore.value == false) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount - 5 && firstVisibleItemPosition >= 0) {
+                        viewModel.loadMorePosts()
                     }
                 }
             }
         })
 
+        // 设置分类 RecyclerView
+        setupCategoryRecyclerView()
+    }
+
+    private fun setupCategoryRecyclerView() {
+        // 确保分类 RecyclerView 有正确的布局管理器
         categoryRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // 初始化分类适配器
         categoryAdapter = CategoryAdapter { category ->
-            currentCategoryId = if (category.id == -1) null else category.id
-            supportActionBar?.title = if (currentCategoryId == null) getString(R.string.app_name) else category.name
-            viewModel.refreshPosts(categoryId = currentCategoryId)
+            val categoryId = if (category.id == -1) null else category.id
+            supportActionBar?.title = if (categoryId == null) getString(R.string.app_name) else category.name
+            viewModel.refreshPosts(newCategoryId = categoryId)
             drawerLayout.closeDrawer(GravityCompat.START)
         }
+
+        // 设置适配器
         categoryRecyclerView.adapter = categoryAdapter
+
+        // 添加一些调试信息
+        categoryRecyclerView.viewTreeObserver.addOnGlobalLayoutListener {
+            android.util.Log.d("CategoryRV", "Category RecyclerView laid out: ${categoryRecyclerView.width} x ${categoryRecyclerView.height}")
+        }
     }
 
     private fun setupSwipeRefresh() {
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refreshPosts(categoryId = currentCategoryId)
+            viewModel.refreshPosts()
         }
         appBarLayout.addOnOffsetChangedListener { _, verticalOffset ->
             swipeRefreshLayout.isEnabled = (verticalOffset == 0)
@@ -228,12 +203,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         viewModel.posts.observe(this) { postList ->
             postAdapter.submitList(postList)
         }
+
         viewModel.categories.observe(this) { categoryList ->
+            android.util.Log.d("MainActivity", "Categories received: ${categoryList.size}")
             categoryAdapter.submitList(categoryList)
+
+            // 强制刷新分类 RecyclerView
+            categoryRecyclerView.post {
+                categoryAdapter.notifyDataSetChanged()
+            }
         }
+
         viewModel.isRefreshing.observe(this) { isRefreshing ->
             swipeRefreshLayout.isRefreshing = isRefreshing
         }
+
+        // 观察错误信息
+        viewModel.error.observe(this) { errorMessage ->
+            if (!errorMessage.isNullOrEmpty()) {
+                android.util.Log.e("MainActivity", "Error: $errorMessage")
+                // 这里可以显示 Toast 或 Snackbar
+            }
+        }
+    }
+
+    private fun loadInitialData() {
+        // 先加载分类数据
+        viewModel.loadCategories()
+
+        // 然后加载默认文章（所有文章）
+        viewModel.refreshPosts(newCategoryId = -1)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -258,27 +257,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun toggleLayout(menuItem: MenuItem) {
         isCardView = !isCardView
         val transition = TransitionSet().apply {
-            addTransition(ChangeBounds().apply {
-                interpolator = OvershootInterpolator()
-                duration = 400
-            })
+            addTransition(ChangeBounds().apply { interpolator = OvershootInterpolator(); duration = 400 })
             addTransition(Fade().setDuration(200))
         }
         TransitionManager.beginDelayedTransition(postRecyclerView.parent as ViewGroup, transition)
 
         if (isCardView) {
-            val staggeredLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            postRecyclerView.layoutManager = staggeredLayoutManager
+            postRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             postAdapter.currentViewType = PostAdapter.VIEW_TYPE_GRID
             menuItem.setIcon(R.drawable.ic_view_list)
-
             gridSpacingDecoration?.let { postRecyclerView.addItemDecoration(it) }
-
         } else {
             postRecyclerView.layoutManager = LinearLayoutManager(this)
             postAdapter.currentViewType = PostAdapter.VIEW_TYPE_LIST_CARD
             menuItem.setIcon(R.drawable.ic_view_module)
-
             gridSpacingDecoration?.let { postRecyclerView.removeItemDecoration(it) }
         }
         postAdapter.notifyItemRangeChanged(0, postAdapter.itemCount)

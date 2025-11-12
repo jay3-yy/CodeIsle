@@ -44,4 +44,18 @@
         app:layout_constraintTop_toBottomOf="@id/commentAuthorUsername"
         tools:text="This is the actual content of the comment. It might be a few lines long." />
 
+    <!-- ✅ 新增：评论的 Reactions 容器（可换行） -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/commentReactionsGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/commentContent"
+        app:layout_constraintTop_toBottomOf="@id/commentContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:singleLine="false"
+        app:singleSelection="false"
+        app:chipSpacingHorizontal="8dp"
+        app:chipSpacingVertical="8dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

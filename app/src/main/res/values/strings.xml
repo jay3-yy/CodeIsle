@@ -2,19 +2,24 @@
 <resources>
     <string name="app_name">CodeIsle</string>
 
-    <string name="privacy_policy_text">
-        欢迎使用我们的应用！\n\n
-        我们非常重视您的隐私。本隐私政策旨在说明我们如何收集、使用、共享和保护您的个人信息。\n\n
-        1. 信息的收集与使用\n
-        为了提供和改进我们的服务，我们可能会收集您在使用我们的应用时提供的信息，例如您的用户名、头像以及您发布的内容。\n\n
-        2. 信息共享\n
-        我们不会与任何第三方公司、组织和个人共享您的个人信息，但以下情况除外：\n
-        - 在获取明确同意的情况下共享；\n
-        - 根据法律法规的强制性要求。\n\n
-        3. 您的权利\n
-        您有权访问、更正、删除您的个人信息。您可以通过应用内的功能或联系我们来行使这些权利。\n\n
-        点击下方的"同意并继续"按钮，即表示您已阅读、理解并同意本隐私政策的所有内容。
-    </string>
+    <string name="privacy_policy_text"><![CDATA[
+欢迎使用我们的应用！
+
+我们非常重视您的隐私。本隐私政策旨在说明我们如何收集、使用、共享和保护您的个人信息。
+
+1. 信息的收集与使用
+为了提供和改进我们的服务，我们可能会收集您在使用我们的应用时提供的信息，例如您的用户名、头像以及您发布的内容。
+
+2. 信息共享
+我们不会与任何第三方公司、组织和个人共享您的个人信息，但以下情况除外：
+- 在获取明确同意的情况下共享；
+- 根据法律法规的强制性要求。
+
+3. 您的权利
+您有权访问、更正、删除您的个人信息。您可以通过应用内的功能或联系我们来行使这些权利。
+
+点击下方的"同意并继续"按钮，即表示您已阅读、理解并同意本隐私政策的所有内容。
+]]></string>
 
     <string name="author_avatar_description">作者头像</string>
 
@@ -29,11 +34,40 @@
     <string name="nav_close">Close navigation drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="image_viewer_title">图片查看</string>
 
     <string name="button_like">点赞</string>
     <string name="button_favorite">收藏</string>
     <string name="loading_failed">加载失败</string>
+    <string name="google_sign_in_cancelled">Google 登录已取消</string>
+    <string name="sign_in_success">登录成功：%1$s</string>
+    <string name="sign_in_required">需要登录</string>
+    <string name="api_not_connected">API 未连接</string>
+    <string name="network_error">网络错误</string>
+    <string name="internal_error">内部错误</string>
+    <string name="developer_error">开发者配置错误，请检查 SHA-1 和包名</string>
+    <string name="sign_in_failed">Google 登录失败：%1$d</string>
 
     <string name="post_cover_image_description">Post cover image</string>
+    <string name="reaction_display_format">%1$s %2$d</string>
+    <string name="comment_count_description">评论数量</string>
+    <string name="no_content_available">无内容</string>
+
+    <string name="app_logo">应用Logo</string>
+    <string name="sign_in_with_google">使用 Google 登录</string>
+    <string name="or_divider">或者</string>
+    <string name="enter_as_guest">以游客身份进入</string>
+    <string name="guest_mode_hint">游客模式下您可以浏览内容，但无法发布或互动</string>
+    <string name="terms_and_policy_hint">登录即表示您同意我们的服务条款和隐私政策</string>
+
+    <string name="default_web_client_id" translatable="false">777830451304-nt8afkkap18gui4f9entcha99unal744.apps.googleusercontent.com</string>
+
+    <string name="menu_home">首页</string>
+    <string name="menu_discover">发现</string>
+    <string name="menu_add">发布</string>
+    <string name="menu_notifications">通知</string>
+    <string name="menu_profile">我的</string>
+    <string name="title_resources">资源</string>
+    <string name="add_reaction">添加回应</string>
 
 </resources>

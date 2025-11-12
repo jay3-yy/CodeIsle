@@ -1,15 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    [cite_start]<style name="Theme.Openisle" parent="Theme.App.Base"> [cite: 1]
-    [cite_start]<item name="colorPrimary">@color/primary_dark</item> [cite: 1]
-    [cite_start]<item name="colorOnPrimary">@color/on_primary_dark</item> [cite: 1]
-    [cite_start]<item name="colorPrimaryContainer">@color/primary_container_dark</item> [cite: 1]
-    [cite_start]<item name="colorOnPrimaryContainer">@color/on_primary_container_dark</item> [cite: 1]
-    [cite_start]<item name="colorSurface">@color/surface_dark</item> [cite: 1]
-    [cite_start]<item name="colorOnSurface">@color/on_surface_dark</item> [cite: 1]
-    [cite_start]<item name="colorOnSurfaceVariant">@color/on_surface_variant_dark</item> [cite: 1]
-    [cite_start]<item name="android:statusBarColor">@color/surface_dark</item> [cite: 1]
-    [cite_start]<item name="android:windowLightStatusBar">false</item> [cite: 1]
-</style>
+    <!-- 夜间：深色基底 -->
+    <style name="Theme.App.Base" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/on_primary_dark</item>
+        <item name="colorPrimaryContainer">@color/primary_container_dark</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container_dark</item>
+
+        <item name="android:colorBackground">@color/background_dark</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorOnSurface">@color/on_surface_dark</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant_dark</item>
+        <item name="colorSurfaceContainer">@color/surface_container_dark</item>
+        <item name="blurOverlayColor">@color/blur_overlay_dark</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="r">false</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="r">false</item>
+
+        <!-- 全局：指定底栏样式 -->
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+
+    <style name="Theme.Openisle" parent="Theme.App.Base" />
+
+    <!-- 夜间 BottomNavigationView：天蓝配色 + 提高高度 + 文字外观更清晰 + 关闭ActiveIndicator -->
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <!-- 色彩：夜间 selector 会自动走 color-night 版本 -->
+        <item name="itemIconTint">@color/bottom_nav_color_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_color_selector</item>
+        <item name="itemRippleColor">@color/sky_blue_20</item>
+        <item name="android:background">?attr/colorSurfaceContainer</item>
+
+        <!-- 尺寸：加高 -->
+        <item name="itemIconSize">28dp</item>
+        <item name="itemPaddingTop">14dp</item>
+        <item name="itemPaddingBottom">14dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:minHeight">88dp</item>
+
+        <!-- ✅ 强制更清晰的文字外观 -->
+        <item name="itemTextAppearanceActive">@style/TextAppearance.App.BottomNavigation</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.App.BottomNavigation</item>
+
+        <!-- 关闭默认紫色“药丸”；如想要淡蓝指示，把 Transparent 改成 @color/sky_blue_20 -->
+        <item name="itemActiveIndicatorStyle">@style/BottomNav.ActiveIndicator.Transparent</item>
+
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="BottomNav.ActiveIndicator.Transparent" parent="">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorSurface">?attr/colorSurfaceContainer</item>
+    </style>
 
 </resources>

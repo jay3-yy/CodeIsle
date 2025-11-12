@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_categories"
+        android:checkableBehavior="single"
+        android:visible="false">  <item
+        android:id="@+id/nav_all_posts"
+        android:icon="@drawable/ic_view_list"
+        android:title="All Posts"
+        android:checked="true" />
+
+        <item
+            android:id="@+id/nav_social"
+            android:icon="@drawable/ic_comment"
+            android:title="好玩 &amp; 轻松交流" />
+
+        <item
+            android:id="@+id/nav_tech"
+            android:icon="@drawable/ic_settings"
+            android:title="技术 &amp; 开发调优" />
+
+        <item
+            android:id="@+id/nav_resources"
+            android:icon="@drawable/ic_folder"
+            android:title="@string/title_resources" />
+    </group>
+
+    <group android:id="@+id/group_actions" >
+        <item
+            android:id="@+id/nav_account_header"
+            android:title="账户"
+            android:enabled="false" />
+        <item
+            android:id="@+id/nav_my_profile"
+            android:icon="@drawable/ic_person"
+            android:title="我的资料" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="注销账号" />
+    </group>
+
+</menu>

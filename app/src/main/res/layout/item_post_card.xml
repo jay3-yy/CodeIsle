@@ -5,78 +5,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
+    android:layout_marginHorizontal="12dp"
     android:layout_marginVertical="6dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp">
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="16dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/authorAvatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.CircleImageView"
-            tools:src="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/authorUsername"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:textAppearance="?attr/textAppearanceTitleSmall"
-            app:layout_constraintStart_toEndOf="@id/authorAvatar"
-            app:layout_constraintTop_toTopOf="@id/authorAvatar"
-            tools:text="Author Name" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
 
-        <TextView
-            android:id="@+id/createdAt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:textAppearance="?attr/textAppearanceLabelMedium"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            app:layout_constraintStart_toEndOf="@id/authorAvatar"
-            app:layout_constraintTop_toBottomOf="@id/authorUsername"
-            tools:text="2025-08-13" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/authorAvatar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/author_avatar_description"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircleImageView"
+                tools:src="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/authorUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceLabelLarge"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textStyle="bold"
+                    tools:text="敬文" />
+
+                <TextView
+                    android:id="@+id/createdAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    tools:text="2025-08-28" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/ic_comment"
+                    android:contentDescription="@string/comment_count_description"
+                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/commentCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    tools:text="4" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/postTitle"
-
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:layout_marginBottom="6dp"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
             android:textStyle="bold"
-
-            android:maxLines="3"
+            android:textColor="?attr/colorOnSurface"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="2"
             android:ellipsize="end"
-            android:lineSpacingExtra="4dp"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/commentCount"
-            app:layout_constraintTop_toBottomOf="@id/authorAvatar"
-            tools:text="这是一个非常长的帖子标题，现在应该可以正常换行显示了。" />
+            tools:text="解决 Embedding 模型长度限制问题" />
 
         <TextView
-            android:id="@+id/commentCount"
-            android:layout_width="wrap_content"
+            android:id="@+id/postExcerpt"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:layout_marginBottom="8dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?attr/colorOnSurfaceVariant"
-            app:drawableStartCompat="@drawable/ic_comment"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            tools:text="一个知识库构建过程中如何解决 Embedding 模型长度限制问题的实践记录" />
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/postTitle"
-            tools:text="123" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/postCoverImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/post_cover_image_description"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedCornerImageView"
+            tools:src="@tools:sample/backgrounds/scenic"
+            tools:visibility="visible" />
 
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

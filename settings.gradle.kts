@@ -1,12 +1,6 @@
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
@@ -17,8 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // 添加 JitPack 仓库，支持 GitHub 上的开源库
-        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://jitpack.io") } // ✅ 必须添加此行以支持 BlurView 和 PhotoView
     }
 }
 

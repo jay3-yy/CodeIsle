@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
 
-    // ✅ 新增/确保这一行存在，用于定义 Hilt 插件
+    // ✅ 修正 Hilt 插件的 ID
     id("com.google.dagger.hilt.android") version "2.48" apply false
+    //alias(libs.plugins.google.gms.google.services) apply false
 }

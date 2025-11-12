@@ -9,55 +9,44 @@
     tools:context=".presentation.features.common.WelcomeActivity">
 
     <TextView
-        android:id="@+id/welcomeTitle"
+        android:id="@+id/tvWelcomeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="欢迎使用 OpenIsle"
-        android:textSize="24sp"
+        android:text="欢迎来到 OpenIsle"
+        android:textAppearance="?attr/textAppearanceHeadlineMedium"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_chainStyle="packed" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@id/tvWelcomeSubtitle" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/privacyPolicyHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="隐私政策与服务条款"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/welcomeTitle" />
-
-    <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/tvWelcomeSubtitle"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="#F5F5F5"
-        android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@id/agreeButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/privacyPolicyHeader">
-
-        <TextView
-            android:id="@+id/privacyPolicyContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/privacy_policy_text"
-            android:lineSpacingExtra="4dp"/>
-    </ScrollView>
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" android:gravity="center"
+        android:text="一个开放、自由的交流社区"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcomeTitle" app:layout_constraintBottom_toTopOf="@id/agreeButton" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/agreeButton"
+        style="@style/Widget.Material3.Button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="同意并继续"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="48dp" android:text="同意并继续"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcomeSubtitle" app:layout_constraintBottom_toTopOf="@id/tvTerms" app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintWidth_percent="0.9" /> <TextView
+    android:id="@+id/tvTerms"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp" android:text="继续即表示您已阅读并同意我们的服务条款和隐私政策"
+    android:textSize="12sp"
+    android:textColor="?attr/colorOnSurfaceVariant"
+    android:gravity="center"
+    android:lineSpacingMultiplier="1.2"
+    app:layout_constraintTop_toBottomOf="@id/agreeButton" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintWidth_percent="0.95" /> </androidx.constraintlayout.widget.ConstraintLayout>

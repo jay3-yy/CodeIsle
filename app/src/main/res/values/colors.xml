@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 浅色主题颜色 -->
+    <!-- 你项目里已有的颜色（原样保留） -->
     <color name="primary_light">#006493</color>
     <color name="on_primary_light">#FFFFFF</color>
     <color name="primary_container_light">#C9E6FF</color>
@@ -9,16 +9,17 @@
     <color name="on_secondary_light">#FFFFFF</color>
     <color name="secondary_container_light">#D2E5F5</color>
     <color name="on_secondary_container_light">#0B1D29</color>
-    <color name="surface_light">#F8FDFF</color>
+    <color name="surface_light">#F8F9FF</color>
     <color name="on_surface_light">#191C1E</color>
     <color name="on_surface_variant_light">#41484D</color>
     <color name="outline_light">#71787E</color>
+    <color name="background_light">#F8F9FF</color>
+    <color name="on_background_light">#191C1E</color>
+    <color name="surface_container_light">#FFFFFF</color>
+    <color name="blur_overlay_light">#A6FFFFFF</color>
     <color name="error_light">#BA1A1A</color>
     <color name="on_error_light">#FFFFFF</color>
-    <color name="background_light">#F8FDFF</color>
-    <color name="on_background_light">#191C1E</color>
 
-    <!-- 深色主题颜色 -->
     <color name="primary_dark">#8DCDFF</color>
     <color name="on_primary_dark">#00344F</color>
     <color name="primary_container_dark">#004B6F</color>
@@ -31,8 +32,15 @@
     <color name="on_surface_dark">#E1E3E5</color>
     <color name="on_surface_variant_dark">#C1C7CE</color>
     <color name="outline_dark">#8B9198</color>
-    <color name="error_dark">#FFB4AB</color>
-    <color name="on_error_dark">#690005</color>
     <color name="background_dark">#111416</color>
     <color name="on_background_dark">#E1E3E5</color>
+    <color name="surface_container_dark">#1E1E1E</color>
+    <color name="blur_overlay_dark">#A6111416</color>
+    <color name="error_dark">#FFB4AB</color>
+    <color name="on_error_dark">#690005</color>
+
+    <!-- ⭐ 新增：天蓝主色 & 半透明涟漪色（20% 透明度） -->
+    <color name="sky_blue_600">#2F80FF</color>
+    <color name="sky_blue_20">#332F80FF</color>
+
 </resources>

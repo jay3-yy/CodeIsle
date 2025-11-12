@@ -5,73 +5,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:layout_margin="6dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:backgroundTint="?attr/colorSurfaceContainerHigh"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp"
+    app:strokeColor="?attr/colorOutlineVariant"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/postCoverImageView"
-            android:layout_width="match_parent"
-
-            android:layout_height="150dp"
-
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic"
-            android:contentDescription="@string/post_cover_image_description" />
-
+        <!-- 标题（永远在最上方） -->
         <TextView
             android:id="@+id/postTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-
-            android:paddingTop="10dp"
-
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="6dp"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="?android:attr/textColorPrimary"
+            android:maxLines="3"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            tools:text="今天情人节，不得抽两杯了" />
 
-            android:textSize="15sp"
+        <!-- 封面容器：固定高度统一行高 -->
+        <FrameLayout
+            android:id="@+id/coverContainer"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="6dp">
 
-            android:lineSpacingExtra="3dp"
-            tools:text="这是一个很长很长的帖子标题，为了测试显示效果需要多写一些文字。" />
+            <!-- 有图时显示 -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/postCoverImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedCornerImageView"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- 无图占位：浅灰色块（无需任何资源） -->
+            <View
+                android:id="@+id/coverPlaceholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/colorSurfaceVariant"
+                android:alpha="0.5" />
+        </FrameLayout>
+
+        <!-- 作者行 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="6dp">
 
-            android:padding="10dp">
-
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/authorAvatarImageView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:src="@tools:sample/avatars"
-                android:contentDescription="@string/author_avatar_description" />
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircleImageView"
+                tools:src="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/authorNameTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textSize="12sp"
-                android:textColor="@android:color/darker_gray"
-                app:layout_constraintStart_toEndOf="@id/authorAvatarImageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="作者名" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginStart="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="?attr/textAppearanceLabelSmall"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_weight="1"
+                tools:text="Evan" />
+        </LinearLayout>
 
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>

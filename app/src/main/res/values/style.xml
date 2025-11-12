@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ShapeAppearance.App.CircleImageView" parent="">
+    <!-- 通用圆角覆盖 -->
+    <style name="ShapeAppearanceOverlay.App" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <!-- 头像全圆 -->
+    <style name="ShapeAppearanceOverlay.App.CircleImageView"
+        parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
 
+    <!-- 8dp 圆角 -->
+    <style name="ShapeAppearanceOverlay.App.RoundedCornerImageView"
+        parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <!-- 兼容已有命名 -->
+    <style name="ShapeAppearance.App.CircleImageView"
+        parent="@style/ShapeAppearanceOverlay.App.CircleImageView" />
+
+    <!-- 你原有的样式保持 -->
     <style name="StatBox" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -14,6 +34,39 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+
+    <style name="TextAppearance.App.BottomNavigation" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- 底栏文字样式：保证文字完全在图标下、行高紧凑 -->
+    <style name="BottomNav.Text" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="lineHeight">14sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- 非激活状态文字样式 -->
+    <style name="BottomNav.Text.Inactive" parent="BottomNav.Text">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- 激活状态文字样式 -->
+    <style name="BottomNav.Text.Active" parent="BottomNav.Text">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 如无需要，可不使用自定义控件样式；保留占位 -->
+    <style name="CustomBottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemTextAppearanceInactive">@style/BottomNav.Text.Inactive</item>
+        <item name="itemTextAppearanceActive">@style/BottomNav.Text.Active</item>
     </style>
 
 </resources>

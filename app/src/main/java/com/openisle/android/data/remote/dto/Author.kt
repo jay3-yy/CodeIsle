@@ -1,0 +1,8 @@
+package com.openisle.android.data
+
+data class Author(
+    val avatar: String,
+    val displayMedal: String,
+    val id: Int,
+    val username: String
+)

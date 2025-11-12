@@ -7,5 +7,11 @@
 
     <dimen name="avatar_size">40dp</dimen>
 
+    <!-- 提高底栏高度，让“图标→文字”有稳定间距 -->
+    <dimen name="bottom_nav_height">64dp</dimen>
+
+    <!-- 若在代码里把系统 WindowInsets.bottom 赋值到这里，能完美适配手势条 -->
+    <dimen name="bottom_nav_inset_padding">0dp</dimen>
+
     <dimen name="line_spacing_extra">4dp</dimen>
 </resources>

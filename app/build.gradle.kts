@@ -1,18 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")  // 使用 KAPT 而不是 KSP
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.example.openisle"
-    compileSdk = 35  // 更新到 35 以满足依赖要求
+    namespace = "com.openisle.android"
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.openisle"
+        applicationId = "com.openisle.android"
         minSdk = 24
-        targetSdk = 34  // 保持 targetSdk 为 34（运行时行为）
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -28,80 +29,101 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-        // 启用核心库的 API 解糖功能，以支持在旧版安卓上使用 java.time.*
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
     }
+
     kotlinOptions {
-        jvmTarget = "1.8"
-        // 强制使用 Kotlin 1.9，避免 2.0+ 版本的 KAPT 兼容性问题
-        languageVersion = "1.9"
-        apiVersion = "1.9"
+        jvmTarget = "17"
     }
 
-    // 启用 View Binding
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
-    // 使用稳定的模糊效果库
-    implementation("jp.wasabeef:blurry:4.0.1")
-
-    implementation("androidx.core:core-ktx:1.12.0")
-
-    // --- 核心界面组件 ---
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
+    // AndroidX 核心库
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
-    // --- 网络请求核心 ---
+    // Material Design
+    implementation("com.google.android.material:material:1.12.0")
+
+    // BlurView
+    implementation("com.github.Dimezis:BlurView:version-3.1.0")
+
+    // 网络请求核心
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 
-    // --- 异步处理 ---
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    // 异步处理
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
-    // --- 图片加载 ---
-    implementation("io.coil-kt:coil:2.4.0")
-    implementation("io.coil-kt:coil-svg:2.4.0")
+    // 图片加载
+    implementation("io.coil-kt:coil:2.6.0")
+    implementation("io.coil-kt:coil-svg:2.6.0")
 
-    // --- Markdown 渲染库 ---
-    implementation("io.noties.markwon:core:4.6.2")
-    implementation("io.noties.markwon:image-coil:4.6.2")
-    implementation("io.noties.markwon:html:4.6.2")
+    // Markdown 渲染库
+    val markwonVersion = "4.6.2"
+    implementation("io.noties.markwon:core:$markwonVersion")
+    implementation("io.noties.markwon:image-coil:$markwonVersion")
+    implementation("io.noties.markwon:html:$markwonVersion")
+    implementation("io.noties.markwon:linkify:$markwonVersion")
+    // 移除 emoji 依赖 - Android 系统原生支持 emoji
+    // implementation("io.noties.markwon:emoji:$markwonVersion")
+    implementation("io.noties.markwon:ext-tables:$markwonVersion")
+    implementation("io.noties.markwon:syntax-highlight:$markwonVersion")
 
-    // --- API 解糖 ---
+    // Prism4j (代码高亮引擎)
+    implementation("io.noties:prism4j:2.0.0")
+    kapt("io.noties:prism4j-bundler:2.0.0")
+
+    // Chrome Custom Tabs
+    implementation("androidx.browser:browser:1.8.0")
+
+    // 现代登录流程库
+    implementation("androidx.credentials:credentials:1.3.0-alpha01")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+
+    // Google 登录核心库
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // API Desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
-    // --- 其他库 ---
+    // PhotoView
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
-    implementation("androidx.activity:activity-ktx:1.8.0")
 
-    // --- Hilt 和 ViewModel 的依赖 ---
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-compiler:2.48")  // 使用 KAPT
+    // Hilt 依赖注入
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
 
-    // --- 测试依赖 ---
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // HTML 解析
+    implementation("org.jsoup:jsoup:1.18.1")
 
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    implementation("org.jsoup:jsoup:1.17.2")
+    // 测试依赖
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
-// KAPT 配置
-kapt {
-    correctErrorTypes = true
+// 解决 "Duplicate class" 冲突
+configurations.all {
+    exclude(group = "org.jetbrains", module = "annotations-java5")
 }

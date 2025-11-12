@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 恢复 DrawerController 中使用的样式名 -->
+    <style name="Widget.App.Chip.Category" parent="Widget.Material3.Chip.Filter">
+        <!-- 统一背景、描边、文本等：你也可以换成自己的 selector -->
+        <item name="chipBackgroundColor">?attr/colorSurfaceContainer</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="chipStrokeColor">?attr/colorOutline</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.LabelLarge</item>
+    </style>
+</resources>

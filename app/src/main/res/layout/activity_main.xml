@@ -6,58 +6,88 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context=".presentation.features.feed.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/mainContentContainer"
+    <eightbitlab.com.blurview.BlurTarget
+        android:id="@+id/mainContentTarget"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/mainContent"
+        <FrameLayout
+            android:id="@+id/mainContentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:elevation="0dp">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize" />
-
-            </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/postsRecyclerView"
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:id="@+id/mainContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    tools:listitem="@layout/item_post_grid" />
+                    android:background="?attr/colorSurface"
+                    android:fitsSystemWindows="false">
 
+                    <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/appBarLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorSurface"
+                        app:elevation="0dp"
+                        app:statusBarForeground="?attr/colorSurface">
+
+                        <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            app:layout_scrollFlags="scroll|enterAlways|snap"
+                            app:title="@string/app_name"/>
+                    </com.google.android.material.appbar.AppBarLayout>
+
+                    <eightbitlab.com.blurview.BlurTarget
+                        android:id="@+id/postsTarget"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/postsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clipToPadding="false"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                    </eightbitlab.com.blurview.BlurTarget>
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/bottomBlurView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom" />
 
-        <ImageView
-            android:id="@+id/blurImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:importantForAccessibility="no"
-            tools:visibility="visible"/>
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@android:color/transparent"
+                app:elevation="0dp"
+                app:menu="@menu/bottom_nav_menu"/>
 
-    </FrameLayout>
+        </FrameLayout>
+
+    </eightbitlab.com.blurview.BlurTarget> <eightbitlab.com.blurview.BlurView
+    android:id="@+id/drawerBlurView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0"
+    android:visibility="gone"
+    tools:visibility="visible"/>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
@@ -66,6 +96,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:itemMinHeight="48dp"
-        app:theme="@style/Theme.App.NavigationView" />
+        app:menu="@menu/drawer_menu"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

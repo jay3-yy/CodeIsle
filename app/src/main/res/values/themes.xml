@@ -1,30 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.App.Base" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.App.Base" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/primary_light</item>
         <item name="colorOnPrimary">@color/on_primary_light</item>
         <item name="colorPrimaryContainer">@color/primary_container_light</item>
         <item name="colorOnPrimaryContainer">@color/on_primary_container_light</item>
+
+        <item name="android:colorBackground">@color/background_light</item>
         <item name="colorSurface">@color/surface_light</item>
         <item name="colorOnSurface">@color/on_surface_light</item>
         <item name="colorOnSurfaceVariant">@color/on_surface_variant_light</item>
+        <item name="colorSurfaceContainer">@color/surface_container_light</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="r">false</item>
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="r">false</item>
 
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="android:windowBackground">@color/background_light</item>
+
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
     <style name="Theme.Openisle" parent="Theme.App.Base" />
 
-    <style name="TextAppearance.App.Navigation.Header" parent="TextAppearance.Material3.TitleLarge">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+    <style name="ShapeAppearance.App.BottomNav" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">22dp</item>
     </style>
 
-    <style name="Theme.App.NavigationView" parent="ThemeOverlay.Material3.NavigationView">
-        <item name="colorOnSurface">@color/on_surface_light</item>
+    <style name="TextAppearance.App.BottomNav.Compact" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">14sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:minHeight">56dp</item> <item name="labelVisibilityMode">labeled</item>
+
+        <item name="android:background">@drawable/bottom_nav_bg_flat</item>
+        <item name="elevation">0dp</item>
+
+        <item name="itemIconSize">20dp</item> <item name="android:paddingTop">4dp</item> <item name="android:paddingBottom">8dp</item> <item name="itemPaddingTop">0dp</item>
+        <item name="itemPaddingBottom">0dp</item>
+
+        <item name="itemTextAppearanceActive">@style/BottomNav.Text.Active</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNav.Text.Inactive</item>
+
+        <item name="itemIconTint">@color/bottom_nav_color_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_color_selector</item>
+        <item name="itemRippleColor">@color/sky_blue_20</item>
+
+        <item name="itemActiveIndicatorStyle">@style/BottomBar.ActiveIndicator.Subtle</item>
+
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="ThemeOverlay.Material3">
+        <item name="colorSurface">?attr/colorSurface</item>
+    </style>
+
+    <style name="BottomBar.ActiveIndicator.Subtle"
+        parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">48dp</item>
+        <item name="android:height">32dp</item>
+        <item name="android:insetTop">6dp</item>
+        <item name="android:insetBottom">6dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.BottomNav</item>
+        <item name="android:color">@color/sky_blue_20</item>
     </style>
 
 </resources>
